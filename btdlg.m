@@ -78,6 +78,10 @@ didDiscoverPeripheral:(CBPeripheral *)prph
     af.pwr_lvl = dict_int(advData, CBAdvertisementDataTxPowerLevelKey, ADV_FIELDS_PWR_LVL_NONE);
     af.connectable = dict_int(advData, CBAdvertisementDataIsConnectable, ADV_FIELDS_CONNECTABLE_NONE);
 
+    if ((af.name == nil) || (af.name[0] == '\0')) {
+        af.name = [[prph name] UTF8String];
+    }
+
     const NSArray *arr = [advData objectForKey:CBAdvertisementDataServiceUUIDsKey];
     const char *svc_uuids[[arr count]];
     for (int i = 0; i < [arr count]; i++) {
